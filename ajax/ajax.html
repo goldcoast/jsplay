@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>原生ajax方法学习</title>
+
+  <script type="text/javascript">
+  (function()
+  { 
+      //现行代码的Content-type为json, 注释为@1的代码是为x-www-form-urlencoded，不同情况用不同方式
+      //@1的后台个用nodejs搞的，refer app.js
+      var urlstr = "http://ijapi1.wolaidai.com/jrocket2/api/v2/client_activities";
+      // urlstr = "http://localhost:3000/test"; //@1
+      // var postData = "origin=test&actions="+'[{"action":"activation","value":"1"}]';//@1
+
+      var xhr; 
+      try {  xhr = new ActiveXObject('Msxml2.XMLHTTP');   }
+      catch (e) 
+      {
+          try {   xhr = new ActiveXObject('Microsoft.XMLHTTP');    }
+          catch (e2) 
+          {
+            try {  xhr = new XMLHttpRequest();     }
+            catch (e3) {  xhr = false;   }
+          }
+      }
+     
+      xhr.onreadystatechange  = function()
+      { 
+           if(xhr.readyState  == 4)
+           {
+                if(xhr.status  == 200) 
+                    //....
+                else
+                    //....
+           }
+      };
+   
+     xhr.open("POST", urlstr,true); 
+     var data = {"origin":"test","actions":[{"action":"activation","value":"1"}]};
+     var postData = JSON.stringify(data);
+     xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+     // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded")//@1
+     // xhr.setRequestHeader("Content-length", postData.length);//@1
+     // xhr.setRequestHeader("Connection", "close");//@1
+     xhr.send(postData); 
+  })();
+
+  </script>
+</head>
+<body>
+    <h1>后台已自动发过请求，请打开开发者工具</h1>
+</body>
+</html>
